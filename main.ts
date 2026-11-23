@@ -282,7 +282,7 @@ function unifiedEdits(lines: string[], strict: boolean): Edit[] {
   const isPair = (k: number): boolean => (lines[k] ?? '').startsWith('--- ') && (lines[k + 1] ?? '').startsWith('+++ ');
   while (i < lines.length) {
     const line = lines[i]!;
-    if (line.startsWith('diff --git ')) {
+    if (line === 'diff --git' || line.startsWith('diff --git ')) {
       const m = GIT_RE.exec(line);
       if (m === null) throw new Exit2(`error: parse ${i + 1}`);
       cur = { gitOld: m[1]!, gitNew: m[2]!, pairOld: undefined, pairNew: undefined, renameFrom: null, renameTo: null, newFile: false, deletedFile: false, hunks: [] };
